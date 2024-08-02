@@ -36,7 +36,7 @@ jobs:
               if [[ ! "$file" =~ ".yml" ]]; then
                   echo "Leyendo el contenido de $file"
                   CONTENT=$(cat "$file")
-                  FILE_CONTENTS="${FILE_CONTENTS}\n\n$file:\n${CONTENT}\n\n"
+                  FILE_CONTENTS="${FILE_CONTENTS}\n${CONTENT}"
               fi
           done
           echo "FILE_CONTENTS<<EOF" >> $GITHUB_ENV
@@ -45,3 +45,19 @@ jobs:
 
       - name: Mostrando el contenido de lo modificado
         run: echo -e "${{ env.FILE_CONTENTS }}"
+      - name: Send email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.example.com # Cambia esto por la dirección de tu servidor SMTP
+          server_port: 587
+          username: ${{ secrets.SMTP_USERNAME }} # Añade tu nombre de usuario SMTP en los Secrets de GitHub
+          password: ${{ secrets.SMTP_PASSWORD }} # Añade tu contraseña SMTP en los Secrets de GitHub
+          subject: "Nuevo commit en el repositorio"
+          body: |
+            Se ha realizado un nuevo commit en el repositorio:
+
+            Archivos modificados:
+
+            ${{ env.FILE_CONTENTS }}
+          to: "alainsadeb@gmail.com" # Cambia estas direcciones por las que deseas enviar el correo
+          from: "apuente@countigo.cu"
