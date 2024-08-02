@@ -5,7 +5,6 @@ on:
     workflows: ["Deploy"]
     types:
       - completed
-  workflow_dispatch:
 
 jobs:
   send_email:
@@ -15,9 +14,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      #- name: Get the latest commit message
-      #id: get_commit
-      #run: echo "COMMIT_MESSAGE=$(git log -1 --pretty=%B)" >> $GITHUB_ENV
       - name: Get list of modified files
         id: modified-files
         uses: actions/github-script@v6
@@ -31,17 +27,21 @@ jobs:
             });
             const fileNames = files.map(f => f.filename).join(' ');
             core.setOutput('files', fileNames);
-      - name: Iterate and process each modified file via SSH
+
+      - name: Iterate and process each modified file
         run: |
           FILE_CONTENTS=""
           for file in ${{ steps.modified-files.outputs.files }}; do
               echo "Fue modificado $file"
-              if [[ ! "$file" =~ "workflow.yml" ]]; then
-                  echo "Renombrando $file via SSH"
+              if [[ ! "$file" =~ ".yml" ]]; then
+                  echo "Leyendo el contenido de $file"
                   CONTENT=$(cat "$file")
-                  FILE_CONTENTS="${FILE_CONTENTS}\n\n${CONTENT}"
+                  FILE_CONTENTS="${FILE_CONTENTS}\n\n$file:\n${CONTENT}\n\n"
               fi
           done
-          echo "filecontents=$FILE_CONTENTS" >> $GITHUB_ENV
+          echo "FILE_CONTENTS<<EOF" >> $GITHUB_ENV
+          echo "$FILE_CONTENTS" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
       - name: Mostrando el contenido de lo modificado
-        run: echo "The filename is ${{ env.filecontents }}"
+        run: echo -e "${{ env.FILE_CONTENTS }}"
