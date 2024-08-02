@@ -1,37 +1,43 @@
 on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
-jobs:
-  rename-file:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Read content from file
-        id: read-file
-        run: |
-          FILENAME=$(cat images_name/servicio-apis.txt)
-          echo "filename=$FILENAME" >> $GITHUB_ENV
-
-      - name: Get list of modified files
-        id: modified-files
-        uses: actions/github-script@v3
-        with:
-          script: |
-            const files = await github.rest.repos.getCommit({
+    push:
+      branches:
+        - main
+    workflow_dispatch:
+  
+  jobs:
+    rename-file:
+      runs-on: ubuntu-latest
+  
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v2
+  
+        - name: Read content from file
+          id: read-file
+          run: |
+            FILENAME=$(cat images_name/servicio-apis.txt)
+            echo "filename=$FILENAME" >> $GITHUB_ENV
+  
+        - name: Get list of modified files
+          id: modified-files
+          uses: actions/github-script@v6
+          with:
+            github-token: ${{ secrets.GITHUB_TOKEN }}
+            script: |
+              const { data: { files } } = await github.rest.repos.getCommit({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 ref: context.sha
-            }).then(commit => commit.data.files.map(f => f.filename).join(' '))
-            core.setOutput('files', files)
-      - name: Iterate and process each modified file via SSH
-        run: |
-          for file in ${{ steps.modified-files.outputs.files }}; do
-              echo "Renaming $file via SSH"
-          done
-      - name: Print the filename for debugging
-        run: echo "The filename is ${{ env.filename }}"
+              });
+              const fileNames = files.map(f => f.filename).join(' ');
+              core.setOutput('files', fileNames);
+  
+        - name: Iterate and process each modified file via SSH
+          run: |
+            for file in ${{ steps.modified-files.outputs.files }}; do
+                echo "Renaming $file via SSH"
+                # Aquí iría tu lógica de procesamiento SSH
+            done
+  
+        - name: Print the filename for debugging
+          run: echo "The filename is ${{ env.filename }}"  
