@@ -46,6 +46,7 @@ jobs:
       - name: Mostrando el contenido de lo modificado
         run: echo -e "${{ env.FILE_CONTENTS }}"
       - name: Send email
+        if: env.FILE_CONTENTS != ''
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com #srv89201-206152.vps.etecsa.cu
@@ -54,7 +55,7 @@ jobs:
           password: ${{ secrets.SMTP_PASSWORD }} # Añade tu contraseña SMTP en los Secrets de GitHub
           subject: "Probando Notificaciones"
           body: |
-            Fueron actualizadas a una nueva versión las siguiente imágenes:
+            Fueron actualizadas a una nueva versión las siguientes imágenes:
 
             ${{ env.FILE_CONTENTS }}
           to: "apuente@countigo.cu,vlavielle@countigo.cu,bayavanlc@gmail.com,mmartinez@countigo.cu" # Cambia estas direcciones por las que deseas enviar el correo
