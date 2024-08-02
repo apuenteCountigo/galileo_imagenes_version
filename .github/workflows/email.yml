@@ -61,3 +61,4 @@ jobs:
             ${{ env.FILE_CONTENTS }}
           to: "alainsadeb@gmail.com" # Cambia estas direcciones por las que deseas enviar el correo
           from: "apuente@countigo.cu"
+          ignore_cert: true
