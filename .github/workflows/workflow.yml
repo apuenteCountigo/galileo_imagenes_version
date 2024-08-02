@@ -16,3 +16,6 @@ jobs:
         run: |
           FILENAME=$(cat images_name/servicio-apis.txt)
           echo "filename=$FILENAME" >> $GITHUB_ENV
+
+      - name: Print the filename for debugging
+        run: echo "The filename is ${{ env.filename }}"
