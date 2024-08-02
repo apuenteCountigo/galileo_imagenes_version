@@ -1,24 +1,22 @@
-name: Deploy
+name: Send Commit Email
+
 on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
+  workflow_run:
+    workflows: ["Deploy"]
+    types:
+      - completed
 
 jobs:
-  rename-file:
+  send_email:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Read content from file
-        id: read-file
-        run: |
-          FILENAME=$(cat images_name/servicio-apis.txt)
-          echo "filename=$FILENAME" >> $GITHUB_ENV
-
+      #- name: Get the latest commit message
+      #id: get_commit
+      #run: echo "COMMIT_MESSAGE=$(git log -1 --pretty=%B)" >> $GITHUB_ENV
       - name: Get list of modified files
         id: modified-files
         uses: actions/github-script@v6
@@ -34,11 +32,15 @@ jobs:
             core.setOutput('files', fileNames);
       - name: Iterate and process each modified file via SSH
         run: |
+          FILE_CONTENTS=""
           for file in ${{ steps.modified-files.outputs.files }}; do
               echo "Fue modificado $file"
               if [[ ! "$file" =~ "workflow.yml" ]]; then
                   echo "Renombrando $file via SSH"
+                  CONTENT=$(cat "$file")
+                  FILE_CONTENTS="${FILE_CONTENTS}\n\n${CONTENT}"
               fi
           done
-      - name: Print the filename for debugging
-        run: echo "The filename is ${{ env.filename }}"
+          echo "filecontents=$FILE_CONTENTS" >> $GITHUB_ENV
+      - name: Mostrando el contenido de lo modificado
+        run: echo "The filename is ${{ env.filecontents }}"
