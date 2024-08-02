@@ -1,1 +1,1 @@
-servicio-apis-V1.0.6
+servicio-apis-V1.0.7
