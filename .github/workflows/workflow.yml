@@ -15,4 +15,4 @@ jobs:
         id: read-file
         run: |
           FILENAME=$(cat images_name/servicio-apis.txt)
-          echo "::set-output name=filename::$FILENAME"
+          echo "filename=$FILENAME" >> $GITHUB_ENV
