@@ -5,6 +5,7 @@ on:
     workflows: ["Deploy"]
     types:
       - completed
+  workflow_dispatch:
 
 jobs:
   send_email:
