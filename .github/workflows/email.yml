@@ -52,13 +52,11 @@ jobs:
           server_port: 587
           username: ${{ secrets.SMTP_USERNAME }} # Añade tu nombre de usuario SMTP en los Secrets de GitHub
           password: ${{ secrets.SMTP_PASSWORD }} # Añade tu contraseña SMTP en los Secrets de GitHub
-          subject: "Nuevo commit en el repositorio"
+          subject: "Probando Notificaciones"
           body: |
-            Se ha realizado un nuevo commit en el repositorio:
-
-            Archivos modificados:
+            Fueron actualizadas a una nueva versión las siguiente imágenes:
 
             ${{ env.FILE_CONTENTS }}
-          to: "apuente@countigo.cu" # Cambia estas direcciones por las que deseas enviar el correo
+          to: "apuente@countigo.cu,vlavielle@countigo.cu,bayavanlc@gmail.com,mmartinez@countigo.cu" # Cambia estas direcciones por las que deseas enviar el correo
           from: "alainsadeb@gmail.com"
           #ignore_cert: true
