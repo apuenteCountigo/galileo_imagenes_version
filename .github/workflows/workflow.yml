@@ -1,0 +1,18 @@
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+jobs:
+  rename-file:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Read content from file
+        id: read-file
+        run: |
+          FILENAME=$(cat images_name/servicio-apis.txt)
+          echo "::set-output name=filename::$FILENAME"
