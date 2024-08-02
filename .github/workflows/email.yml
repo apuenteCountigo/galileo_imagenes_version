@@ -48,7 +48,7 @@ jobs:
       - name: Send email
         uses: dawidd6/action-send-mail@v3
         with:
-          server_address: mail.countigo.cu # Cambia esto por la dirección de tu servidor SMTP
+          server_address: srv89201-206152.vps.etecsa.cu #mail.countigo.cu # Cambia esto por la dirección de tu servidor SMTP
           server_port: 587
           username: ${{ secrets.SMTP_USERNAME }} # Añade tu nombre de usuario SMTP en los Secrets de GitHub
           password: ${{ secrets.SMTP_PASSWORD }} # Añade tu contraseña SMTP en los Secrets de GitHub
