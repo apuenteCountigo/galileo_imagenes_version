@@ -34,7 +34,9 @@ jobs:
       - name: Iterate and process each modified file via SSH
         run: |
           for file in ${{ steps.modified-files.outputs.files }}; do
-              echo "Renombrando $file via SSH"
+              echo "Fue modificado $file"
+              if(!$file.contains("workflow.yml"))
+                echo "Renombrando $file via SSH"
               # Aquí iría tu lógica de procesamiento SSH
           done
       - name: Print the filename for debugging
