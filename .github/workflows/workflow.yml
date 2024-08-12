@@ -34,9 +34,8 @@ jobs:
             core.setOutput('fileNames', fileNames);
       - name: procesando
         run: |
-          fileNames="${{ steps.get-files.outputs.fileNames }}"
           CONTENTS=();
           FILESNAMES=();
-          for file in $fileNames; do
+          for file in ${{ steps.modified-files.outputs.files }}; do
             echo "Fue modificado $file"
           done
