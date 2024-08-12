@@ -48,12 +48,10 @@ jobs:
               FILESNAMES+=("$modified_file")
             fi
           done
-          echo "CONTENTS<<EOF" >> $GITHUB_ENV
-          echo "$CONTENTS" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
-          echo "FILESNAMES<<EOF" >> $GITHUB_ENV
-          echo "$FILESNAMES" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
+          echo "CONTENTS=${CONTENTS[@]}"
+          echo "FILESNAMES=${FILESNAMES[@]}"
+          echo "contens=${CONTENTS[@]}" >> $GITHUB_ENV
+          echo "filesnames=${FILESNAMES[@]}" >> $GITHUB_ENV
       - name: executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@v1.0.0
         with:
@@ -63,8 +61,8 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             FILE_CONTENTS=""
-            contens=${{ env.CONTENTS }}
-            filesnames=${{ env.FILESNAMES }}
+            contens=${{ env.contens }}
+            filesnames=${{ env.filesnames }}
             for i in "${!contens[@]}"; do
               conten="${contens[$i]}"
               filename="${filesnames[$i]}"
