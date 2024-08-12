@@ -44,7 +44,9 @@ jobs:
                   FILE_CONTENTS=$(printf "%s_%s" "$modified_file" "$CONTENT")
                   echo "Nombre completo:: $FILE_CONTENTS"
                   docker tag galileo-newdev-"$modified_file" 80.84.132.104:5001/galileo/"$modified_file":"$CONTENT"  
+                  echo "primer tag galileo-newdev-$modified_file"
                   docker tag galileo-newdev-"$modified_file" galileo/"$modified_file":"$CONTENT"
+                  echo "Segundo tag galileo-newdev-$modified_file"
                   docker push 80.84.132.104:5001/galileo/"$modified_file":"$CONTENT"
               fi
           done
