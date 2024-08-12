@@ -70,6 +70,8 @@ jobs:
               echo "Nombre completo:: $FILE_CONTENTS"
               gp="galileo-newdev-$filename"
               ssh -i ~/id_rsaalain mome@192.168.0.98 "
+                filename='$filename';
+                conten='$conten';
                 gp='$gp';
                 img=\$(docker images | grep \$gp);
                 echo \"img==\$img\";
