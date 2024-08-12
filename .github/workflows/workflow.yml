@@ -72,6 +72,6 @@ jobs:
               ssh -i ~/id_rsaalain mome@192.168.0.98 "
               gp='$gp'; 
               docker images | grep \$gp"
+              exit
               echo "GREPPPPP"
             done
-            exit
