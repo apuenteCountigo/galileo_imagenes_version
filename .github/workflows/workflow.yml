@@ -31,8 +31,4 @@ jobs:
                 ref: context.sha
             });
             const fileNames = files.map(f => f.filename).join(' ');
-            CONTENTS=();
-            FILESNAMES=();
-
-            core.setOutput('contens', CONTENTS);
-            core.setOutput('filesnames', FILESNAMES);
+            CONTENTS=()
