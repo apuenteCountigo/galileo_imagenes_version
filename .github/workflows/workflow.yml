@@ -68,9 +68,9 @@ jobs:
               filename="${filesnames[$i]}"
               FILE_CONTENTS=$(printf "%s_%s" "$filename" "$conten")
               echo "Nombre completo:: $FILE_CONTENTS"
-              echo "grep galileo-newdev-$filename"
+              gp="galileo-newdev-$filename"
               ssh -i ~/id_rsaalain mome@192.168.0.98 '
-              docker images | grep galileo-newdev-"$filename"'
+              docker images | grep "$gp"'
               echo "GREPPPPP"
             done
             exit
