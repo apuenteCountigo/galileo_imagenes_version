@@ -39,7 +39,4 @@ jobs:
           FILESNAMES=();
           for file in fileNames; do
             echo "Fue modificado $file"
-            
           done
-          core.setOutput('contens', CONTENTS);
-          core.setOutput('filesnames', FILESNAMES);
