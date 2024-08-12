@@ -36,7 +36,7 @@ jobs:
               if [[ ! "$file" =~ ".yml" ]]; then
                   echo "Leyendo el contenido de $file"
                   CONTENT=$(cat "$file")
-                  FILE_CONTENTS=$(printf "%s\n%s" "$FILE_CONTENTS" "$file_$CONTENT")
+                  FILE_CONTENTS=$(printf "%s\n%s_%s" "$FILE_CONTENTS" "$file" "$CONTENT")
               fi
           done
           echo "FILE_CONTENTS<<EOF" >> $GITHUB_ENV
