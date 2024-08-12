@@ -31,7 +31,20 @@ jobs:
                 ref: context.sha
             });
             const fileNames = files.map(f => f.filename).join(' ');
-            core.setOutput('files', fileNames);
+            CONTENTS=()
+            FILESNAMES=()
+            for file in fileNames; do
+              echo "Fue modificado $file"
+              if [[ ! "$file" =~ "workflow.yml" ]]; then
+                echo "Renombrando $file via SSH"
+                modified_file=$(echo "$file" | sed 's|images_name/||g' | sed 's|.txt||g')
+                CONTENT=$(cat "$file")
+                CONTENTS+=("$CONTENT")
+                FILESNAMES+=("$modified_file")
+              fi
+            done
+            core.setOutput('contens', CONTENTS);
+            core.setOutput('filesnames', FILESNAMES);
       - name: executing remote ssh commands using ssh key
         uses: appleboy/ssh-action@v1.0.0
         with:
@@ -40,20 +53,18 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            FILE_CONTENTS="" &&
-            for file in ${{ steps.modified-files.outputs.files }}; do
-              echo "Fue modificado $file"
-              if [[ ! "$file" =~ "workflow.yml" ]]; then
-                  echo "Renombrando $file via SSH"
-                  modified_file=$(echo "$file" | sed 's|images_name/||g' | sed 's|.txt||g')
-                  CONTENT=$(cat "$file")
-                  FILE_CONTENTS=$(printf "%s_%s" "$modified_file" "$CONTENT")
-                  echo "Nombre completo:: $FILE_CONTENTS"
-                  ssh -i ~/id_rsaalain mome@192.168.0.98 '
-                  sudo docker images | grep galileo-newdev-"$modified_file"'
-                  exit
-                  echo "GREPPPPP"
-              fi
+            FILE_CONTENTS=""
+            contens=(${{ steps.modified-files.outputs.contens }})
+            filesnames=(${{ steps.modified-files.outputs.filesnames }})
+            for i in "${!contens[@]}"; do
+              conten="${contens[$i]}"
+              filename="${filesnames[$i]}"
+              FILE_CONTENTS=$(printf "%s_%s" "$filename" "$conten")
+              echo "Nombre completo:: $FILE_CONTENTS"
+              ssh -i ~/id_rsaalain mome@192.168.0.98 '
+              sudo docker images | grep galileo-newdev-"$filename"'
+              exit
+              echo "GREPPPPP"
             done
       - name: Print the filename for debugging
         run: echo "The filename is ${{ env.filename }}"
