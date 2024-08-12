@@ -39,8 +39,8 @@ jobs:
                 echo "Renombrando $file via SSH"
                 modified_file=$(echo "$file" | sed 's|images_name/||g' | sed 's|.txt||g')
                 CONTENT=$(cat "$file")
-                CONTENTS+=("$CONTENT")
-                FILESNAMES+=("$modified_file")
+                CONTENTS+=$CONTENT"
+                FILESNAMES+=$modified_file"
               fi
             done
             core.setOutput('contens', CONTENTS);
