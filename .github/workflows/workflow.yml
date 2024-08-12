@@ -48,5 +48,3 @@ jobs:
               FILESNAMES+=("$modified_file")
             fi
           done
-          core.setOutput('contens', CONTENTS);
-          core.setOutput('filesnames', FILESNAMES);
