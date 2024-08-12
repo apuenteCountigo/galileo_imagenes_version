@@ -37,6 +37,6 @@ jobs:
           fileNames="${{ steps.get-files.outputs.fileNames }}"
           CONTENTS=();
           FILESNAMES=();
-          for file in fileNames; do
+          for file in $fileNames; do
             echo "Fue modificado $file"
           done
