@@ -43,7 +43,9 @@ jobs:
                   CONTENT=$(cat "$file")
                   FILE_CONTENTS=$(printf "%s_%s" "$modified_file" "$CONTENT")
                   echo "Nombre completo:: $FILE_CONTENTS"
-                  sudo docker images
+                  ssh -i ~/id_rsaalain mome@192.168.0.98 '
+                  sudo docker images | grep galileo-newdev-"$modified_file"'
+                  exit
                   echo "GREPPPPP"
               fi
           done
