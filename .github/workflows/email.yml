@@ -35,8 +35,9 @@ jobs:
               echo "Fue modificado $file"
               if [[ ! "$file" =~ ".yml" ]]; then
                   echo "Leyendo el contenido de $file"
+                  modified_file=$(echo "$file" | sed 's|images_name/||g' | sed 's|.txt||g')
                   CONTENT=$(cat "$file")
-                  FILE_CONTENTS=$(printf "%s\n%s_%s" "$FILE_CONTENTS" "$file" "$CONTENT")
+                  FILE_CONTENTS=$(printf "%s\n%s_%s" "$FILE_CONTENTS" "$modified_file" "$CONTENT")
               fi
           done
           echo "FILE_CONTENTS<<EOF" >> $GITHUB_ENV

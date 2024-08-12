@@ -39,8 +39,9 @@ jobs:
               echo "Fue modificado $file"
               if [[ ! "$file" =~ "workflow.yml" ]]; then
                   echo "Renombrando $file via SSH"
+                  modified_file=$(echo "$file" | sed 's|images_name/||g' | sed 's|.txt||g')
                   CONTENT=$(cat "$file")
-                  FILE_CONTENTS=$(printf "%s\n%s_%s" "$FILE_CONTENTS" "$file" "$CONTENT")
+                  FILE_CONTENTS=$(printf "%s\n%s_%s" "$FILE_CONTENTS" "$modified_file" "$CONTENT")
                   echo "Nombre completo:: $FILE_CONTENTS"
               fi
           done
