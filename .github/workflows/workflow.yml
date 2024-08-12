@@ -61,8 +61,8 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             FILE_CONTENTS=""
-            contens=${{ env.contens }}
-            filesnames=${{ env.filesnames }}
+            contens=(${{ env.contens }})
+            filesnames=(${{ env.filesnames }})
             for i in "${!contens[@]}"; do
               conten="${contens[$i]}"
               filename="${filesnames[$i]}"
