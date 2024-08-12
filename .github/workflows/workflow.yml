@@ -40,7 +40,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            ssh -i ~/id_rsaalain mome@192.168.0.98 '
             FILE_CONTENTS="" &&
             for file in ${{ steps.modified-files.outputs.files }}; do
               echo "Fue modificado $file"
@@ -50,10 +49,11 @@ jobs:
                   CONTENT=$(cat "$file")
                   FILE_CONTENTS=$(printf "%s_%s" "$modified_file" "$CONTENT")
                   echo "Nombre completo:: $FILE_CONTENTS"
-                  sudo docker images | grep galileo-newdev-"$modified_file"
+                  ssh -i ~/id_rsaalain mome@192.168.0.98 '
+                  sudo docker images | grep galileo-newdev-"$modified_file"'
+                  exit
                   echo "GREPPPPP"
               fi
-            done'
-            exit
+            done
       - name: Print the filename for debugging
         run: echo "The filename is ${{ env.filename }}"
