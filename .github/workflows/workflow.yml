@@ -71,7 +71,7 @@ jobs:
               gp="galileo-newdev-$filename"
               ssh -i ~/id_rsaalain mome@192.168.0.98 "
               gp='$gp'; 
-              docker images | grep \$gp"
-              exit
-              echo "GREPPPPP"
+              docker images | grep \$gp &&
+              echo 'GREPPPPP'"
             done
+            exit
