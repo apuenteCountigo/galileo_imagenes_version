@@ -50,6 +50,7 @@ jobs:
           done
           echo "CONTENTS<<EOF" >> $GITHUB_ENV
           echo "$CONTENTS" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
           echo "FILESNAMES<<EOF" >> $GITHUB_ENV
           echo "$FILESNAMES" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
