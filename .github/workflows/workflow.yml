@@ -31,8 +31,8 @@ jobs:
                 ref: context.sha
             });
             const fileNames = files.map(f => f.filename).join(' ');
-            CONTENTS=()
-            FILESNAMES=()
+            CONTENTS=();
+            FILESNAMES=();
             for file in fileNames; do
               echo "Fue modificado $file"
               if [[ ! "$file" =~ "workflow.yml" ]]; then
@@ -45,26 +45,3 @@ jobs:
             done
             core.setOutput('contens', CONTENTS);
             core.setOutput('filesnames', FILESNAMES);
-      - name: executing remote ssh commands using ssh key
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SSH_PORT }}
-          script: |
-            FILE_CONTENTS=""
-            contens=${{ steps.modified-files.outputs.contens }}
-            filesnames=${{ steps.modified-files.outputs.filesnames }}
-            for i in "${!contens[@]}"; do
-              conten="${contens[$i]}"
-              filename="${filesnames[$i]}"
-              FILE_CONTENTS=$(printf "%s_%s" "$filename" "$conten")
-              echo "Nombre completo:: $FILE_CONTENTS"
-              ssh -i ~/id_rsaalain mome@192.168.0.98 '
-              sudo docker images | grep galileo-newdev-"$filename"'
-              exit
-              echo "GREPPPPP"
-            done
-      - name: Print the filename for debugging
-        run: echo "The filename is ${{ env.filename }}"
