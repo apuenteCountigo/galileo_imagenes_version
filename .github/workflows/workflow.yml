@@ -33,15 +33,6 @@ jobs:
             const fileNames = files.map(f => f.filename).join(' ');
             CONTENTS=();
             FILESNAMES=();
-            for file in fileNames; do
-              echo "Fue modificado $file"
-              if [[ ! "$file" =~ "workflow.yml" ]]; then
-                echo "Renombrando $file via SSH"
-                modified_file=$(echo "$file" | sed 's|images_name/||g' | sed 's|.txt||g')
-                CONTENT=$(cat "$file")
-                CONTENTS+=$CONTENT"
-                FILESNAMES+=$modified_file"
-              fi
-            done
+
             core.setOutput('contens', CONTENTS);
             core.setOutput('filesnames', FILESNAMES);
