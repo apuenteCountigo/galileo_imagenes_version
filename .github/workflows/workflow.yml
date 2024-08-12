@@ -53,3 +53,24 @@ jobs:
           echo "FILESNAMES<<EOF" >> $GITHUB_ENV
           echo "$FILESNAMES" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
+      - name: executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            FILE_CONTENTS=""
+            contens=${{ env.CONTENTS }}
+            filesnames=${{ env.FILESNAMES }}
+            for i in "${!contens[@]}"; do
+              conten="${contens[$i]}"
+              filename="${filesnames[$i]}"
+              FILE_CONTENTS=$(printf "%s_%s" "$filename" "$conten")
+              echo "Nombre completo:: $FILE_CONTENTS"
+              ssh -i ~/id_rsaalain mome@192.168.0.98 '
+              sudo docker images | grep galileo-newdev-"$filename"'
+              exit
+              echo "GREPPPPP"
+            done
