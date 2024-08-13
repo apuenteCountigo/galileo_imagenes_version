@@ -79,6 +79,9 @@ jobs:
                   echo 'YEHAA';
                   deleteName=\$(ls /home/mome/docker/galileo-docker-images/ | grep \$filename) &&
                   echo \"deleteName=\$deleteName\";
+                  if [[ -n \"\$deleteName\" ]]; then
+                    mv /home/mome/docker/galileo-docker-images/\$deleteName /home/mome/docker/borrar/\$deleteName
+                  fi
                 fi;
                 echo 'GREPPPPP'"
             done
