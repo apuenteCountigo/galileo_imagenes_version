@@ -104,6 +104,10 @@ jobs:
                   sed -i \"/\$serv/d\" /home/mome/docker/galileo-install/galileo-compose/.env
                   echo \"\${serv}_version=\$conten\" >> /home/mome/docker/galileo-install/galileo-compose/.env
                   cat /home/mome/docker/galileo-install/galileo-compose/.env
+                  echo '********************************************'
+                  sed -i \"/\$serv/d\" /home/mome/docker/galileo-install/docker/env
+                  echo \"\${serv}_version=\$conten\" >> /home/mome/docker/galileo-install/docker/env
+                  cat /home/mome/docker/galileo-install/docker/env
                   #rm /home/mome/docker/borrar/*.* 
                 fi;
                 echo 'GREPPPPP'"
