@@ -73,7 +73,7 @@ jobs:
                 filename='$filename';
                 conten='$conten';
                 gp='$gp';
-                img=\$(docker images | grep \$gp | awk '{print $1}') &&
+                img=\$(docker images | grep \$gp | awk \"{print $1}\") &&
                 echo \"img==\$img\";
                 if [[ -n \"\$img\" ]]; then
                   echo 'ANTES DE deleteName';
@@ -89,7 +89,7 @@ jobs:
                     echo \"eliminando imagen1 \$img1\"
                     #docker rmi -f \$img1
                   fi;
-                  img2=\$(docker images | grep galileo/\$filename | awk '{print $1}') &&
+                  img2=\$(docker images | grep galileo/\$filename | awk \"{print $1}\") &&
                   if [[ -n \"\$img2\" ]]; then
                     echo \"eliminando imagen2 \$img2\"
                     #docker rmi -f \$img2
