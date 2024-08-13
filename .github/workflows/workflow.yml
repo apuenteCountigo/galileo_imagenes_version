@@ -101,7 +101,9 @@ jobs:
                   docker save -o \"/home/mome/docker/galileo-docker-images/\${filename}_\$conten.tar.gz\" galileo/\$filename:\$conten &&
                   serv=\"${filename/servicio-/}\"
                   echo \"serv==\$serv\"
-                  #sed -i \"/error/d\" /home/mome/docker/galileo-install/galileo-compose/.env
+                  sed -i \"/\$serv/d\" /home/mome/docker/galileo-install/galileo-compose/.env
+                  echo \"\${serv}_version=\$conten\" >> /home/mome/docker/galileo-install/galileo-compose/.env
+                  cat /home/mome/docker/galileo-install/galileo-compose/.env
                   #rm /home/mome/docker/borrar/*.* 
                 fi;
                 echo 'GREPPPPP'"
