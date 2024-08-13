@@ -100,7 +100,7 @@ jobs:
                   docker tag \$gp galileo/\$filename:\$conten &&
                   docker save -o \"/home/mome/docker/galileo-docker-images/\${filename}_\$conten.tar.gz\" galileo/\$filename:\$conten &&
                   serv=\"${filename/servicio-/}\"
-                  echo \"filename==\$filename\"
+                  echo \"serv==\$serv\"
                   #sed -i \"/error/d\" /home/mome/docker/galileo-install/galileo-compose/.env
                   #rm /home/mome/docker/borrar/*.* 
                 fi;
