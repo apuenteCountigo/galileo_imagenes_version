@@ -73,7 +73,7 @@ jobs:
                 filename='$filename';
                 conten='$conten';
                 gp='$gp';
-                img=\$(docker images | grep \$gp | awk '{print $1}'); &&
+                img=\$(docker images | grep \$gp | awk '{print $1}') &&
                 echo \"img==\$img\";
                 if [[ -n \"\$img\" ]]; then
                   echo 'ANTES DE deleteName';
