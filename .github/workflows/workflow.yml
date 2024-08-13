@@ -77,8 +77,8 @@ jobs:
                 echo \"img==\$img\";
                 if [[ -n \"\$img\" ]]; then
                   echo 'YEHAA';
-                  docker tag \$gp 80.84.132.104:5001/galileo/\$filename:\$conten &&
-                  docker tag \$gp galileo/\$filename:\$conten
+                  deleteName=\$(ls -l /home/mome/docker/galileo-docker-images/ | grep \$filename | awk '{print $9}') &&
+                  echo \"deleteName=\$deleteName\"
                 fi;
                 echo 'GREPPPPP'"
             done
