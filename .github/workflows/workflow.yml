@@ -77,7 +77,8 @@ jobs:
                 echo \"img==\$img\";
                 if [[ -n \"\$img\" ]]; then
                   echo 'YEHAA';
-                  docker tag \$gp 80.84.132.104:5001/galileo/\$filename:\$conten
+                  docker tag \$gp 80.84.132.104:5001/galileo/\$filename:\$conten &&
+                  docker tag \$gp galileo/\$filename:\$conten
                 fi;
                 echo 'GREPPPPP'"
             done
