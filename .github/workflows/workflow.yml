@@ -38,7 +38,7 @@ jobs:
           FILESNAMES=();
           for file in ${{ steps.modified-files.outputs.fileNames }}; do
             echo "Fue modificado $file"
-            if [[ "$file" != "workflow.yml" && "$file" != "email.yml" ]]; then
+            if [[ ! "$file" =~ "workflow.yml" && ! "$file" =~ "email.yml" ]]; then
               echo "Renombrando $file via SSH"
               modified_file=$(echo "$file" | sed 's|images_name/||g' | sed 's|.txt||g')
               CONTENT=$(cat "$file")
