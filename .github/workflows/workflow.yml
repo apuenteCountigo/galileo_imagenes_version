@@ -74,9 +74,46 @@ jobs:
                 if [[ \"\$filename\" == *\"webapp\"* ]]; then
                   gp=\"galileo-newdev-webapp\";
                   echo \"gp==\$gp\";
+                  docker commit servicio-web galileo-newdev-webapp
                   exit
                 fi;
-                
+                img=\$(docker images | grep \$gp | awk '{print \$1}') &&
+                echo \"img==\$img\";
+                if [[ -n \"\$img\" ]]; then
+                  echo 'ANTES DE deleteName';
+                  deleteName=\$(ls /home/mome/docker/galileo-docker-images/ | grep \$filename) &&
+                  echo \"deleteName=\$deleteName\";
+                  if [[ -n \"\$deleteName\" ]]; then
+                    mv /home/mome/docker/galileo-docker-images/\$deleteName /home/mome/docker/borrar/\$deleteName &&
+                    echo \"FUE MOVIDO EL ARCHIVO \$deleteName\";
+                  fi;
+                  echo 'DESPUES DE deleteName';
+                  img1=\$(docker images | grep 80.84.132.104:5001/galileo/\$filename | awk '{print \$1}') &&
+                  ver1=\$(docker images | grep 80.84.132.104:5001/galileo/\$filename | awk '{print \$2}') &&
+                  if [[ -n \"\$img1\" ]]; then
+                    echo \"eliminando imagen1 \$img1:\$ver1\"
+                    docker rmi -f \$img1:\$ver1
+                  fi;
+                  img2=\$(docker images | grep galileo/\$filename | awk '{print \$1}') &&
+                  ver2=\$(docker images | grep galileo/\$filename | awk '{print \$2}') &&
+                  if [[ -n \"\$img2\" ]]; then
+                    echo \"eliminando imagen2 \$img2:\$ver2\"
+                    docker rmi -f \$img2:\$ver2
+                  fi;
+                  docker tag \$gp 80.84.132.104:5001/galileo/\$filename:\$conten &&
+                  docker tag \$gp galileo/\$filename:\$conten &&
+                  docker save -o \"/home/mome/docker/galileo-docker-images/\${filename}_\$conten.tar.gz\" galileo/\$filename:\$conten &&
+                  serv=\"${filename/servicio-/}\"
+                  echo \"serv==\$serv\"
+                  sed -i \"/\$serv/d\" /home/mome/docker/galileo-install/galileo-compose/.env
+                  echo \"\${serv}_version=\$conten\" >> /home/mome/docker/galileo-install/galileo-compose/.env
+                  cat /home/mome/docker/galileo-install/galileo-compose/.env
+                  echo '********************************************'
+                  sed -i \"/\$serv/d\" /home/mome/docker/galileo-install/docker/env
+                  echo \"\${serv}_version=\$conten\" >> /home/mome/docker/galileo-install/docker/env
+                  cat /home/mome/docker/galileo-install/docker/env
+                  rm /home/mome/docker/borrar/*.* 
+                fi;
                 echo 'GREPPPPP'"
             done
             exit
