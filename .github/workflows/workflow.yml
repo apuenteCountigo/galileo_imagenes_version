@@ -74,6 +74,16 @@ jobs:
                 if [[ \"\$filename\" == *\"webapp\"* ]]; then
                   gp=\"galileo-newdev-webapp\";
                   echo \"gp==\$gp\";
+                  imgtmp=\$(docker images | grep \$gp | awk '{print \$1}') &&
+                  echo \"imgtmp==\$imgtmp\";
+                  if [[ -n \"\$imgtmp\" ]]; then
+                    imgtmp1=\$(docker images | grep \$gp | awk '{print \$1}') &&
+                    vertmp1=\$(docker images | grep \$gp | awk '{print \$2}') &&
+                    if [[ -n \"\$imgtmp1\" ]]; then
+                      echo \"eliminando imagen Webapp \$imgtmp1:\$vertmp1\"
+                      docker rmi -f \$imgtmp1:\$vertmp1
+                    fi;
+                  fi
                   docker commit servicio-web galileo-newdev-webapp
                   exit
                 fi;
