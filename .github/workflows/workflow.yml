@@ -96,6 +96,9 @@ jobs:
                     echo \"eliminando imagen2 \$img2:\$ver2\"
                     docker rmi -f \$img2:\$ver2
                   fi;
+                  docker tag \$gp 80.84.132.104:5001/galileo/\$filename:\$conten &&
+                  docker tag \$gp galileo/\$filename:\$conten &&
+                  docker save -o "/home/mome/docker/galileo-docker-images/\$filename_\$conten.tar.gz" galileo/\$filename:\$conten
                 fi;
                 echo 'GREPPPPP'"
             done
