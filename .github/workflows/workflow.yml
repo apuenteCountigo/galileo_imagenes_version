@@ -85,7 +85,6 @@ jobs:
                     fi;
                   fi
                   docker commit servicio-web galileo-newdev-webapp
-                  exit
                 fi;
                 img=\$(docker images | grep \$gp | awk '{print \$1}') &&
                 echo \"img==\$img\";
