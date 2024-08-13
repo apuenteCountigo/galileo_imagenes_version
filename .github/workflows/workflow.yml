@@ -74,6 +74,11 @@ jobs:
                 if [[ \"\$filename\" == *\"webapp\"* ]]; then
                   gp=\"galileo-newdev-webapp\";
                   echo \"gp==\$gp\";
+                  cont=\$(docker ps | grep webapp | awk '{print \$13}') &&
+                  if [[ -n \"\$cont\" ]]; then
+                    docker stop webapp &&
+                    docker rm webapp
+                  fi;
                   imgtmp=\$(docker images | grep \$gp | awk '{print \$1}') &&
                   echo \"imgtmp==\$imgtmp\";
                   if [[ -n \"\$imgtmp\" ]]; then
@@ -122,6 +127,10 @@ jobs:
                   echo \"\${serv}_version=\$conten\" >> /home/mome/docker/galileo-install/docker/env
                   cat /home/mome/docker/galileo-install/docker/env
                   rm /home/mome/docker/borrar/*.* 
+                  if [[ \"\$filename\" == *\"webapp\"* ]]; then
+                    cd /home/mome/docker/galileo-install/galileo-compose &&
+                    docker compose up app -d
+                  fi;
                 fi;
                 echo 'GREPPPPP'"
             done
