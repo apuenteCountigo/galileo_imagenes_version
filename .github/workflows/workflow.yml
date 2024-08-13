@@ -79,22 +79,7 @@ jobs:
                   echo 'YEHAA';
                   deleteName=\$(ls /home/mome/docker/galileo-docker-images/ | grep \$filename) &&
                   echo \"deleteName=\$deleteName\";
-                  if [[ -n \"\$deleteName\" ]]; then
-                    mv /home/mome/docker/galileo-docker-images/\$deleteName /home/mome/docker/borrar/\$deleteName &&
-                  fi;
-                  img1=\$(docker images | grep 80.84.132.104:5001/galileo/\$filename | awk '{print $1}') &&
-                  if [[ -n \"\$img1\" ]]; then
-                    echo \"eliminando imagen \$img1\"
-                    docker rmi -f \$img1 &&
-                  fi;
-                  img2=\$(docker images | grep galileo/\$filename | awk '{print $1}') &&
-                  if [[ -n \"\$img2\" ]]; then
-                    echo \"eliminando imagen \$img2\"
-                    docker rmi -f \$img2 &&
-                  fi;
-                  docker tag \$gp 80.84.132.104:5001/galileo/\$filename:\$conten &&
-                  docker tag \$gp galileo/\$filename:\$conten &&
-                  docker save -o "/home/mome/docker/galileo-docker-images/\$filename_\$conten.tar.gz" galileo/\$filename:\$conten
+                  
                 fi;
                 echo 'GREPPPPP'"
             done
