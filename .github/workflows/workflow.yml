@@ -77,7 +77,7 @@ jobs:
                 echo \"img==\$img\";
                 if [[ -n \"\$img\" ]]; then
                   echo 'YEHAA';
-                  deleteName=\$(ls -l /home/mome/docker/galileo-docker-images/ | grep \$filename | awk '{print $9}') &&
+                  deleteName=\$(ls /home/mome/docker/galileo-docker-images/ | grep \$filename) &&
                   echo \"deleteName=\$deleteName\";
                 fi;
                 echo 'GREPPPPP'"
