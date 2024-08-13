@@ -98,7 +98,11 @@ jobs:
                   fi;
                   docker tag \$gp 80.84.132.104:5001/galileo/\$filename:\$conten &&
                   docker tag \$gp galileo/\$filename:\$conten &&
-                  docker save -o \"/home/mome/docker/galileo-docker-images/\${filename}_\$conten.tar.gz\" galileo/\$filename:\$conten
+                  docker save -o \"/home/mome/docker/galileo-docker-images/\${filename}_\$conten.tar.gz\" galileo/\$filename:\$conten &&
+                  serv=\"${filename/servicio-/}\"
+                  echo \"filename==\$filename\"
+                  #sed -i \"/error/d\" /home/mome/docker/galileo-install/galileo-compose/.env
+                  #rm /home/mome/docker/borrar/*.* 
                 fi;
                 echo 'GREPPPPP'"
             done
