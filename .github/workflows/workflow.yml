@@ -86,13 +86,13 @@ jobs:
                   echo 'DESPUES DE deleteName';
                   img1=\$(docker images | grep 80.84.132.104:5001/galileo/\$filename | awk '{print $1}') &&
                   if [[ -n \"\$img1\" ]]; then
-                    echo \"eliminando imagen \$img1\"
-                    docker rmi -f \$img1
+                    echo \"eliminando imagen1 \$img1\"
+                    #docker rmi -f \$img1
                   fi;
                   img2=\$(docker images | grep galileo/\$filename | awk '{print $1}') &&
                   if [[ -n \"\$img2\" ]]; then
-                    echo \"eliminando imagen \$img2\"
-                    docker rmi -f \$img2
+                    echo \"eliminando imagen2 \$img2\"
+                    #docker rmi -f \$img2
                   fi;
                 fi;
                 echo 'GREPPPPP'"
