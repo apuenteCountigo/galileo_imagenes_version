@@ -73,14 +73,17 @@ jobs:
                 filename='$filename';
                 conten='$conten';
                 gp='$gp';
-                img=\$(docker images | grep \$gp | awk '{print $1}');
+                img=\$(docker images | grep \$gp | awk '{print $1}'); &&
                 echo \"img==\$img\";
                 if [[ -n \"\$img\" ]]; then
                   echo 'ANTES DE deleteName';
                   deleteName=\$(ls /home/mome/docker/galileo-docker-images/ | grep \$filename | awk '{print $1}') &&
-                  echo 'DESPUES DE deleteName';
                   echo \"deleteName=\$deleteName\";
-                  
+                  if [[ -n \"\$deleteName\" ]]; then
+                    mv /home/mome/docker/galileo-docker-images/\$deleteName /home/mome/docker/borrar/\$deleteName &&
+                    echo \"FUE MOVIDO EL ARCHIVO \$deleteName\";
+                  fi;
+                  echo 'DESPUES DE deleteName';
                 fi;
                 echo 'GREPPPPP'"
             done
