@@ -60,6 +60,6 @@ jobs:
             Fueron actualizadas a una nueva versión las siguientes imágenes:
 
             ${{ env.FILE_CONTENTS }}
-          to: "apuente@countigo.cu,vlavielle@countigo.cu,bayavanlc@gmail.com,mmartinez@countigo.cu,pilar.garcia@mome.es,juan.falcon@grupomome.com,pedro.sanchez@mome.es" # Cambia estas direcciones por las que deseas enviar el correo
+          to: "apuente@countigo.cu" #,vlavielle@countigo.cu,bayavanlc@gmail.com,mmartinez@countigo.cu,pilar.garcia@mome.es,juan.falcon@grupomome.com,pedro.sanchez@mome.es" # Cambia estas direcciones por las que deseas enviar el correo
           from: "alainsadeb@gmail.com"
           #ignore_cert: true
